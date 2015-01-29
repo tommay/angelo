@@ -115,28 +115,6 @@ module Angelo
       def task name, &block
         Angelo::Server.define_task name, &block
       end
-    end
-
-    # Make the DSL methods available to subclass-level code.
-    # main.rb makes them available to the top level.
-
-    extend DSL
-
-    class << self
-      def report_errors?
-        !!@report_errors
-      end
-
-      def compile! name, &block
-        define_method name, &block
-        method = instance_method name
-        remove_method name
-        method
-      end
-
-      def routes
-        @routes ||= Hash.new{|h,k| h[k] = RouteMap.new}
-      end
 
       def filters
         @filters ||= {before: {default: []}, after: {default: []}}
@@ -172,6 +150,29 @@ module Angelo
 
       def on_pong &block
         Responder::Websocket.on_pong = block
+      end
+
+    end
+
+    # Make the DSL methods available to subclass-level code.
+    # main.rb makes them available to the top level.
+
+    extend DSL
+
+    class << self
+      def report_errors?
+        !!@report_errors
+      end
+
+      def compile! name, &block
+        define_method name, &block
+        method = instance_method name
+        remove_method name
+        method
+      end
+
+      def routes
+        @routes ||= Hash.new{|h,k| h[k] = RouteMap.new}
       end
 
       def websockets reject = true
