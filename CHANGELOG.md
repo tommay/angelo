@@ -5,6 +5,7 @@ changelog
 
 thanks: @tommay, @kyledrake, @katjaeinsfeld
 
+* add angelo/main for sinatra-like top-level DSL (#37)
 * refactor testing helpers (#35)
 * refactor ParamsParser#parse_post_body (#34)
 * Responder.symhash refactored to Angelo::SymHash (#33)
